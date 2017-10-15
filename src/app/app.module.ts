@@ -5,23 +5,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import { ChartsModule } from 'ng2-charts';
-
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { RepoListComponent } from './components/repo-list/repo-list.component';
-import { IssuesChartComponent } from './components/issues-chart/issues-chart.component';
-import { RepoComponent } from './components/repo/repo.component';
-import { DetailsComponent } from './components/repo/details/details.component';
-
-
-import { RepoService } from './services/repo.service';
 import { RepoViewComponent } from './components/repo-view/repo-view.component';
 import { RepoDetailsViewComponent } from './components/repo-details-view/repo-details-view.component';
 import { RepoIssuesViewComponent } from './components/repo-issues-view/repo-issues-view.component';
+
+import { RepoService } from './services/repo.service';
 
 
 // const appRoutes: Routes = [
@@ -42,7 +36,8 @@ import { RepoIssuesViewComponent } from './components/repo-issues-view/repo-issu
 const appRoutes: Routes = [
     { path: '', redirectTo: '/welcome', pathMatch: 'full' },
     { path: 'welcome', component: WelcomeComponent },
-    { path: 'repository-search', component: RepoListComponent }
+    { path: 'repository-search', component: RepoListComponent },
+    { path: 'repository/:id', component: RepoViewComponent }
 
 ];
 
@@ -51,10 +46,10 @@ const appRoutes: Routes = [
         AppComponent,
         WelcomeComponent,
         RepoListComponent,
-        IssuesChartComponent,
         RepoViewComponent,
         RepoDetailsViewComponent,
         RepoIssuesViewComponent
+
     ],
     imports: [
         RouterModule.forRoot(appRoutes,{ enableTracing: true }),
@@ -62,8 +57,7 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
-        ChartsModule
+        HttpClientModule
     ],
     providers: [
         RepoService

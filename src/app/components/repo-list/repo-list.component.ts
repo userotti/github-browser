@@ -18,12 +18,11 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class RepoListComponent implements OnInit {
 
     repos: Repo[];
-    repos$: Observable<Repo[]>;
     searchTerm$ = new Subject<string>();
+    loading: boolean;
 
     constructor(
         private router: Router,
-        private formBuilder: FormBuilder,
         private repoService: RepoService
     ) {
 
@@ -31,14 +30,47 @@ export class RepoListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.repos$ = this.repoService.fetchReposBySearchTerm('');
+        this.repos = [];
         this.searchTerm$
-            .debounceTime(300)
-            .distinctUntilChanged()
-            .subscribe((data)=>{
-                console.log("GO!!!")
-                this.repos$ = this.repoService.fetchReposBySearchTerm(data);
-            })
+        .debounceTime(300)
+        .distinctUntilChanged()
+        .do((newSearch) => {
+            if (newSearch.length == 0) {
+                this.repos = [];
+            }
+        })
+        .filter((searchString) => (searchString.length > 0))
+        .do((newSearch) => {
+            this.loading = true;
+        })
+        .subscribe((data)=>{
+            this.fetchRepos(data);
+        })
     }
+
+    fetchRepos(searchTerm){
+        this.repoService.fetchReposBySearchTerm(searchTerm)
+        .do(()=>{
+            this.loading = false;
+        })
+        .catch((e: any) => Observable.throw(this.errorHandler(e)))
+        .subscribe((repsonse)=>{
+            this.successHandler(repsonse);
+        })
+    }
+
+    successHandler(repsonse){
+        if (repsonse.items){
+            this.repos = repsonse.items;
+        } else {
+            this.repos = [];
+        }
+    }
+
+    errorHandler(err) {
+        console.log("ERROR: ", err);
+        this.repos = [];
+    }
+
 
 }

@@ -5,11 +5,22 @@
     </h4>
     <hr>
 
-    <ul class="list-group">
-      <a *ngFor="let item of repos$ | async" [routerLink]="[item.$key]" class="list-group-item list-group-item-action d-flex justify-content-between">
-        <span>{{ item.name }}</span>
-        <!-- <img *ngIf="item.thumbnail_url" class="custom-thumbnail" [src]="item.thumbnail_url" /> -->
-      </a>
+    <ul class="list-group" *ngIf="repos.length>0">
+        <a *ngFor="let item of repos" [routerLink]="['/repository/'+item.id]" class="list-group-item list-group-item-action d-flex justify-content-between">
+            <span>{{ item.name }}</span>
+        </a>
     </ul>
+
+    <div *ngIf="loading then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+        <div>
+            Loading...
+        </div>
+    </ng-template>
+    <ng-template #elseBlock>
+        <div *ngIf="repos.length==0">
+            No repos found.
+        </div>
+    </ng-template>
 
 </div>
