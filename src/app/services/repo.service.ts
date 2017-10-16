@@ -17,7 +17,7 @@ export class RepoService {
         return this.http.get("https://api.github.com/search/repositories?q=" + searchTerm)
     }
 
-    fetchRepoByID(repoId) {
+    fetchRepoByOwnerName(repoId) {
         return this.http.get("https://api.github.com/search/repositories?q=repo:" + repoId);
     }
 

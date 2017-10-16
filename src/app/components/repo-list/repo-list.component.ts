@@ -66,7 +66,7 @@ export class RepoListComponent implements OnInit {
 
     successHandler(repsonse){
         if (repsonse.items){
-            this.repos = repsonse.items;
+            this.repos = Repo.fromJsonList(repsonse.items);
         } else {
             this.repos = [];
         }

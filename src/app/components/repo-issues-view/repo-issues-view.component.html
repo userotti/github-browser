@@ -1,3 +1,33 @@
-<p>
-  repo-issues-view works!
-</p>
+<div class="mt-4">
+    <div style="display: block">
+        <canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>Show: {{filter}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button class="dropdown-item" (click)="setFilter('All')">All</button>
+                    <button class="dropdown-item" (click)="setFilter('Closed')">Closed</button>
+                    <button class="dropdown-item" (click)="setFilter('Open')">Open</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="issues.length>0">
+        <div *ngFor="let item of issues | issuesFilter:filter" class="card mb-4">
+            <div class="card-header">
+                <a href="{{item.html_url}}" target="_">#{{item.number}}</a>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Status: {{item.state}}</h4>
+                <p class="card-text">{{item.body}}</p>
+            </div>
+        </div>
+    </div>
+</div>

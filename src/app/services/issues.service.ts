@@ -13,12 +13,15 @@ export class IssueService {
 
     }
 
-    fetchReposBySearchTerm(searchTerm):Observable<Repo[]> {
-        return this.http.get("https://api.github.com/search/repositories?q=" + searchTerm)
+    fetchIssuesByRepoOwnerName(ownerRepoName):Observable<any[]>{
+        return this.http.get("https://api.github.com/repos/" + ownerRepoName + "/issues?state=all");
     }
-
-    fetchRepoByID(repoId) {
-        return this.http.get("https://api.github.com/search/repositories?q=repo:" + repoId);
-    }
+    // fetchReposBySearchTerm(searchTerm):Observable<Repo[]> {
+    //     return this.http.get("https://api.github.com/search/repositories?q=" + searchTerm)
+    // }
+    //
+    // fetchRepoByID(repoId) {
+    //     return this.http.get("https://api.github.com/search/repositories?q=repo:" + repoId);
+    // }
 
 }

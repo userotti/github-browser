@@ -14,7 +14,7 @@
     <div *ngIf="loading then thenBlock; else elseBlock"></div>
     <ng-template #thenBlock>
         <div>
-            Loading...
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
         </div>
     </ng-template>
     <ng-template #elseBlock>

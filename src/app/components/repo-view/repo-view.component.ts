@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RepoService } from '../../services/repo.service';
+import { IssueService } from '../../services/issues.service';
+
 import { Repo } from '../../models/repo.model';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -12,6 +14,7 @@ import { Subscription, Observable } from 'rxjs';
 })
 export class RepoViewComponent implements OnInit {
 
+    issues: any[];
     repo: Repo;
     repo$: Observable<Repo>;
     loadingDetails: boolean;
@@ -21,6 +24,8 @@ export class RepoViewComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private repoService: RepoService,
+        private issueService: IssueService,
+
     ) {
 
     }
@@ -29,36 +34,46 @@ export class RepoViewComponent implements OnInit {
 
         this.route.paramMap.switchMap((params: ParamMap) => {
             this.loadingDetails = true;
-            return this.repoService.fetchRepoByID(params.get('owner')+"/"+params.get('name'));
+            return this.repoService.fetchRepoByOwnerName(params.get('owner')+"/"+params.get('name'));
         })
-        .catch((e: any) => Observable.throw(this.errorHandler(e)))
+        .catch((e: any) => Observable.throw(this.repoFetchErrorHandler(e)))
         .subscribe((repsonse)=>{
-            this.successHandler(repsonse);
+            this.repoFetchSuccessHandler(repsonse);
         })
 
         this.route.paramMap.switchMap((params: ParamMap) => {
             this.loadingIssues = true;
-            return this.repoService.fetchRepoByID(params.get('owner')+"/"+params.get('name'));
+            return this.issueService.fetchIssuesByRepoOwnerName(params.get('owner')+"/"+params.get('name'));
         })
-        .catch((e: any) => Observable.throw(this.errorHandler(e)))
+        .catch((e: any) => Observable.throw(this.issuesFetchErrorHandler(e)))
         .subscribe((repsonse)=>{
-            this.successHandler(repsonse);
+            this.issuesFetchSuccessHandler(repsonse);
         })
 
     }
 
-    successHandler(repsonse){
+    repoFetchSuccessHandler(repsonse){
         console.log("repsonse: ", repsonse);
         if (repsonse.items){
             this.repo = repsonse.items[0];
-            this.loadingDetails = false;
         }
-
     }
 
-    errorHandler(err) {
-        console.log("ERROR: ", err);
+    repoFetchErrorHandler(err) {
+        console.log("repoFetchErrorHandler ERROR: ", err);
         this.repo = undefined;
+    }
+
+    issuesFetchSuccessHandler(repsonse){
+        console.log("issues repsonse: ", repsonse);
+        if (repsonse){
+            this.issues = repsonse;
+        }
+    }
+
+    issuesFetchErrorHandler(err) {
+        console.log("issuesFetchErrorHandler ERROR: ", err);
+        this.issues = undefined;
     }
 
 }

@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-// import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,8 @@ import { RepoDetailsViewComponent } from './components/repo-details-view/repo-de
 import { RepoIssuesViewComponent } from './components/repo-issues-view/repo-issues-view.component';
 
 import { RepoService } from './services/repo.service';
+import { IssueService } from './services/issues.service';
+import { IssuesFilterPipe } from './shared/issues-filter.pipe';
 
 
 const appRoutes: Routes = [
@@ -33,7 +36,8 @@ const appRoutes: Routes = [
         RepoListComponent,
         RepoViewComponent,
         RepoDetailsViewComponent,
-        RepoIssuesViewComponent
+        RepoIssuesViewComponent,
+        IssuesFilterPipe
 
     ],
     imports: [
@@ -42,10 +46,12 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        ChartsModule
     ],
     providers: [
-        RepoService
+        RepoService,
+        IssueService
     ],
     bootstrap: [AppComponent]
 })

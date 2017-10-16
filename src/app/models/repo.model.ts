@@ -3,10 +3,12 @@ export class Repo {
     constructor(
         public id:string,
         public url: string,
+        public full_name: string,
+        public name: string,
         public description: string,
-        public forks_count: string,
+        public forks_count: number,
         public stargazers_count: number,
-        public open_issues: string,
+        public open_issues: number,
         public html_url: string) {
 
     }
@@ -18,6 +20,8 @@ export class Repo {
     static fromJson({
         id,
         url,
+        full_name,
+        name,
         description,
         forks_count,
         stargazers_count,
@@ -26,6 +30,8 @@ export class Repo {
 
         return new Repo(id,
         url,
+        full_name,
+        name,
         description,
         forks_count,
         stargazers_count,
