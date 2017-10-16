@@ -18,26 +18,11 @@ import { RepoIssuesViewComponent } from './components/repo-issues-view/repo-issu
 import { RepoService } from './services/repo.service';
 
 
-// const appRoutes: Routes = [
-//   { path: 'crisis-center', component: CrisisListComponent },
-//   { path: 'hero/:id',      component: HeroDetailComponent },
-//   {
-//     path: 'heroes',
-//     component: HeroListComponent,
-//     data: { title: 'Heroes List' }
-//   },
-//   { path: '',
-//     redirectTo: '/heroes',
-//     pathMatch: 'full'
-//   },
-//   { path: '**', component: PageNotFoundComponent }
-// ];
-
 const appRoutes: Routes = [
     { path: '', redirectTo: '/welcome', pathMatch: 'full' },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'repository-search', component: RepoListComponent },
-    { path: 'repository/:id', component: RepoViewComponent }
+    { path: 'repository/:owner/:name', component: RepoViewComponent }
 
 ];
 
@@ -53,7 +38,7 @@ const appRoutes: Routes = [
     ],
     imports: [
         RouterModule.forRoot(appRoutes,{ enableTracing: true }),
-        NgbModule,
+        NgbModule.forRoot(),
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,

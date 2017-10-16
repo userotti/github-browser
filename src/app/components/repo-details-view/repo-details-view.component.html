@@ -1,3 +1,41 @@
-<p>
-  repo-details-view works!
-</p>
+
+
+<div class=" mt-4">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <span> <b>URL:</b> <a href="{{repo.html_url}}" target="_">{{repo.html_url}}</a></span>
+        </li>
+        <li class="list-group-item">
+            <span> <b>Description:</b> {{repo.description}}</span>
+        </li>
+        <li class="list-group-item">
+            <span> <b>Number of forks:</b> {{repo.forks_count}}</span>
+        </li>
+        <li class="list-group-item">
+            <span> <b>Stargazers count:</b> {{repo.stargazers_count}}</span>
+        </li>
+        <li class="list-group-item">
+            <span> <b>Open issue count:</b> {{repo.open_issues}}</span>
+        </li>
+    </ul>
+
+</div>
+
+<!-- <div class="container">
+<ul>
+<li>
+<span> URL: {{repo.url}}<span>
+</li>
+
+<li>
+<span> Description: {{repo.description}}<span>
+</li>
+
+
+<li>
+<span> Link: {{repo.html_url}}<span>
+</li>
+
+</ul>
+
+</div> -->

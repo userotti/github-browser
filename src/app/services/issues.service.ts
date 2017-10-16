@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class RepoService {
+export class IssueService {
 
 
     constructor(private http: HttpClient) {

@@ -59,6 +59,11 @@ export class RepoListComponent implements OnInit {
         })
     }
 
+    getLinkUrl(item){
+        let fullName = item.full_name.split('/');
+        return '/repository/' + fullName[0] + "/" + fullName[1]
+    }
+
     successHandler(repsonse){
         if (repsonse.items){
             this.repos = repsonse.items;

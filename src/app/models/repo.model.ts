@@ -1,13 +1,13 @@
 export class Repo {
 
     constructor(
-        public $key:string,
+        public id:string,
+        public url: string,
         public description: string,
-        public thumbnail_url: string,
-        public detail: string,
-        public diameter: number,
-        public price: string,
-        public product_category: string) {
+        public forks_count: string,
+        public stargazers_count: number,
+        public open_issues: string,
+        public html_url: string) {
 
     }
 
@@ -16,21 +16,21 @@ export class Repo {
     }
 
     static fromJson({
-        $key,
+        id,
+        url,
         description,
-        thumbnail_url,
-        detail,
-        diameter,
-        price,
-        product_category}):Repo {
+        forks_count,
+        stargazers_count,
+        open_issues,
+        html_url}):Repo {
 
-        return new Repo($key,
+        return new Repo(id,
+        url,
         description,
-        thumbnail_url,
-        detail,
-        diameter,
-        price,
-        product_category);
+        forks_count,
+        stargazers_count,
+        open_issues,
+        html_url);
     }
 
 }
