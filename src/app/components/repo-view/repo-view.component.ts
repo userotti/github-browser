@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RepoService } from '../../services/repo.service';
 import { IssueService } from '../../services/issues.service';
 
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+
 import { Repo } from '../../models/repo.model';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -19,6 +21,8 @@ export class RepoViewComponent implements OnInit {
     repo$: Observable<Repo>;
     loadingDetails: boolean;
     loadingIssues: boolean;
+
+    errorModalContent: HTMLTemplateElement;
 
     constructor(
         private route: ActivatedRoute,
@@ -51,6 +55,8 @@ export class RepoViewComponent implements OnInit {
         })
 
     }
+
+
 
     repoFetchSuccessHandler(repsonse){
         console.log("repsonse: ", repsonse);

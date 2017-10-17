@@ -4,6 +4,9 @@ import { Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorModalComponent } from '../error-modal/error-modal.component';
+
 import { RepoService } from '../../services/repo.service';
 import { Repo } from '../../models/repo.model';
 
@@ -20,10 +23,12 @@ export class RepoListComponent implements OnInit {
     repos: Repo[];
     searchTerm$ = new Subject<string>();
     loading: boolean;
+    lastSearchTerm: string;
 
     constructor(
         private router: Router,
-        private repoService: RepoService
+        private repoService: RepoService,
+        private modalService: NgbModal
     ) {
 
 
@@ -41,6 +46,7 @@ export class RepoListComponent implements OnInit {
         })
         .filter((searchString) => (searchString.length > 0))
         .do((newSearch) => {
+            this.lastSearchTerm = newSearch
             this.loading = true;
         })
         .subscribe((data)=>{
@@ -73,8 +79,24 @@ export class RepoListComponent implements OnInit {
     }
 
     errorHandler(err) {
-        console.log("ERROR: ", err);
         this.repos = [];
+        this.loading = false;
+        this.openErrorModal(err.name, err.error, 'Try again in a minute').then(()=>{
+            setTimeout(()=>{
+                this.loading = true;
+                this.fetchRepos(this.lastSearchTerm);
+            }, 1000)
+        });
+    }
+
+    openErrorModal(errorTitle: string, errorBody: string, buttonMessage: string) {
+        var modalRef = this.modalService.open(ErrorModalComponent);
+        modalRef.componentInstance.title = errorTitle;
+        modalRef.componentInstance.body = errorBody;
+        modalRef.componentInstance.buttonMessage = buttonMessage;
+
+
+        return modalRef.result;
     }
 
 

@@ -19,6 +19,7 @@ import { RepoIssuesViewComponent } from './components/repo-issues-view/repo-issu
 import { RepoService } from './services/repo.service';
 import { IssueService } from './services/issues.service';
 import { IssuesFilterPipe } from './shared/issues-filter.pipe';
+import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 
 
 const appRoutes: Routes = [
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
         RepoViewComponent,
         RepoDetailsViewComponent,
         RepoIssuesViewComponent,
-        IssuesFilterPipe
+        IssuesFilterPipe,
+        ErrorModalComponent
 
     ],
     imports: [
@@ -53,6 +55,7 @@ const appRoutes: Routes = [
         RepoService,
         IssueService
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [ErrorModalComponent]
 })
 export class AppModule { }
