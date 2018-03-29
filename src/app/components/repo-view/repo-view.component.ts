@@ -43,7 +43,7 @@ export class RepoViewComponent implements OnInit {
         .catch((e: any) => Observable.throw(this.repoFetchErrorHandler(e)))
         .subscribe((repsonse)=>{
             this.repoFetchSuccessHandler(repsonse);
-        })
+        }, error => {} );
 
         this.route.paramMap.switchMap((params: ParamMap) => {
             this.loadingIssues = true;
@@ -52,7 +52,7 @@ export class RepoViewComponent implements OnInit {
         .catch((e: any) => Observable.throw(this.issuesFetchErrorHandler(e)))
         .subscribe((repsonse)=>{
             this.issuesFetchSuccessHandler(repsonse);
-        })
+        }, error => {})
 
     }
 
